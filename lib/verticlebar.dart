@@ -11,7 +11,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<charts.Series<Calculation, int>> seriesBarData;
+  List<charts.Series<Calculation, String>> seriesBarData;
 
   _generateData() async {
     final load =
@@ -25,8 +25,8 @@ class _HomePageState extends State<HomePage> {
 
     seriesBarData.add(charts.Series(
       data: chartdata,
-      domainFn: (Calculation chartdata, _) => int.parse(chartdata.time),
-      //domainFn: (Calculation chartdata, _) => chartdata.time,
+      //domainFn: (Calculation chartdata, _) => int.parse(chartdata.time),
+      domainFn: (Calculation chartdata, _) => chartdata.time,
       measureFn: (Calculation chartdata, _) => int.parse(chartdata.distance),
       // measureFn: (Calculation chartdata, _) => chartdata.distance,
       id: 'Performance',
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    seriesBarData = List<charts.Series<Calculation, int>>();
+    seriesBarData = List<charts.Series<Calculation, String>>();
     _generateData();
   }
 
@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
           ),
           if (seriesBarData.length > 0)
             Expanded(
-              child: charts.LineChart(
+              child: charts.BarChart(
                 seriesBarData,
                 animate: true,
                 animationDuration: Duration(seconds: 5),
